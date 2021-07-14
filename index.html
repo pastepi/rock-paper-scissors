@@ -6,9 +6,26 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        
+        <div>
+            <button class="btn-start">Begin the game</button>
+        </div>
+        <div class="button-container">
+            <button class="btn-choice" type="button" value="rock" disabled>
+                <img class="btn-img" src="static/rock1.png">
+            </button>
+            <button class="btn-choice" type="button" value="paper" disabled>
+                <img class="btn-img" src="static/paper1.png">
+            </button>
+            <button class="btn-choice" type="button" value="scissors" disabled>
+                <img class="btn-img" src="static/scissors1.png">
+            </button>  
+        </div>
+
+        <div id="game-score" class="score-div"></div>
   
         
         <script src="script.js" async defer></script>
