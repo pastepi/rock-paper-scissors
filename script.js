@@ -6,6 +6,9 @@ const divScore = document.querySelector('#game-score');
 const scoreHeading = document.createElement('h2');
 
 
+let playerWinCount = 0;
+let playerLoseCount = 0;
+let gameCounter = 0;
 
 let computerPlay = () => {
     let moveArray = ["rock", "paper", "scissors"];
@@ -39,10 +42,46 @@ let playRound = (playerSelection, computerSelection) => {
     }
 };
 
+let playGame = (playerMove) => {
 
-let playerWinCount = 0;
-let playerLoseCount = 0;
-let gameCounter = 0;
+    let computerSelection = computerPlay();
+
+    switch(playRound(playerMove, computerSelection)) {
+        case 0:
+            console.log(`Draw! You both picked ${playerMove}.`);
+            break;
+        case 1:
+            console.log(`You win! ${playerMove[0].toUpperCase() + playerMove.slice(1)} beats ${computerSelection}.`);
+            playerWinCount += 1;
+            break;
+        case 2:
+            console.log(`You lose! ${playerMove[0].toUpperCase() + playerMove.slice(1)} loses to ${computerSelection}.`);
+            playerLoseCount += 1;
+            break;
+        default:
+            break;
+    }
+    gameCounter++;
+    let score = `Current Win-Lose: ${playerWinCount}-${playerLoseCount}`;
+
+    return score;
+};
+
+
+let cssAdded = '.btn-img:hover { transition: ease 0.5s; transform: scale(1.2,1.2); filter: grayscale(0%); cursor: pointer} .btn-choice:active { transition: ease 0.2s; transform: scale(0.90) }';
+
+let cssRemoved = '.btn-img:hover { transition: ease 0.5s; transform: none; filter: grayscale(100%); cursor: unset} .btn-choice:active { transition: ease 0.2s; transform: none }';
+
+let addStyles = (cssText) => {
+    let style = document.createElement('style');
+    if (style.styleSheet) {
+        style.styleSheet.cssText = cssText;
+    } else {
+        style.appendChild(document.createTextNode(cssText))
+    }
+    document.getElementsByTagName('head')[0].appendChild(style);
+}
+
 
 buttonStart.addEventListener('click', () => {
     buttons.forEach((button) => {
@@ -50,13 +89,7 @@ buttonStart.addEventListener('click', () => {
     })
     buttonContainer.style.cssText = "filter: none";
 
-    let style = document.createElement('style');
-    if (style.styleSheet) {
-        style.styleSheet.cssText = '.btn-img:hover { transition: ease 0.5s; transform: scale(1.2,1.2); filter: grayscale(0%); cursor: pointer}';
-    } else {
-        style.appendChild(document.createTextNode('.btn-img:hover { transition: ease 0.5s; transform: scale(1.2,1.2); filter: grayscale(0%); cursor: pointer}'))
-    }
-    document.getElementsByTagName('head')[0].appendChild(style);
+    addStyles(cssAdded);
     
     scoreHeading.textContent = "Current Win-Lose: 0-0";
     scoreHeading.animate([
@@ -84,6 +117,9 @@ buttons.forEach((button) => {
             buttons.forEach((button) => {
                 button.disabled = true;
             })
+            
+            addStyles(cssRemoved);
+
             let gameOver = document.createElement('h3');
             gameOver.textContent = `Game finished. ${(playerWinCount > playerLoseCount) ? "You win!" 
             : (playerWinCount < playerLoseCount) ? "You lose!" 
@@ -107,28 +143,4 @@ buttons.forEach((button) => {
     })
 });
 
-let playGame = (playerMove) => {
-
-    let computerSelection = computerPlay();
-
-    switch(playRound(playerMove, computerSelection)) {
-        case 0:
-            console.log(`Draw! You both picked ${playerMove}.`);
-            break;
-        case 1:
-            console.log(`You win! ${playerMove[0].toUpperCase() + playerMove.slice(1)} beats ${computerSelection}.`);
-            playerWinCount += 1;
-            break;
-        case 2:
-            console.log(`You lose! ${playerMove[0].toUpperCase() + playerMove.slice(1)} loses to ${computerSelection}.`);
-            playerLoseCount += 1;
-            break;
-        default:
-            break;
-    }
-    gameCounter++;
-    let score = `Current Win-Lose: ${playerWinCount}-${playerLoseCount}`;
-
-    return score;
-};
 

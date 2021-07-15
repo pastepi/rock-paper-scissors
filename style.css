@@ -28,11 +28,6 @@ div {
     transition: ease 0.2s;
 }
 
-.btn-choice:active {
-    transition: ease 0.2s;
-    transform: scale(0.90);
-}
-
 .btn-img {
     width: 100%;
     filter: grayscale(100%);
