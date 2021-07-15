@@ -68,28 +68,15 @@ let playGame = (playerMove) => {
 };
 
 
-let cssAdded = '.btn-img:hover { transition: ease 0.5s; transform: scale(1.2,1.2); filter: grayscale(0%); cursor: pointer} .btn-choice:active { transition: ease 0.2s; transform: scale(0.90) }';
-
-let cssRemoved = '.btn-img:hover { transition: ease 0.5s; transform: none; filter: grayscale(100%); cursor: unset} .btn-choice:active { transition: ease 0.2s; transform: none }';
-
-let addStyles = (cssText) => {
-    let style = document.createElement('style');
-    if (style.styleSheet) {
-        style.styleSheet.cssText = cssText;
-    } else {
-        style.appendChild(document.createTextNode(cssText))
-    }
-    document.getElementsByTagName('head')[0].appendChild(style);
-}
-
-
 buttonStart.addEventListener('click', () => {
     buttons.forEach((button) => {
         button.disabled = false;
     })
     buttonContainer.style.cssText = "filter: none";
 
-    addStyles(cssAdded);
+    btnImg.forEach((img) => {
+        img.classList.add('gameactive');
+    })
     
     scoreHeading.textContent = "Current Win-Lose: 0-0";
     scoreHeading.animate([
@@ -118,7 +105,9 @@ buttons.forEach((button) => {
                 button.disabled = true;
             })
             
-            addStyles(cssRemoved);
+            btnImg.forEach((img) => {
+                img.classList.remove('gameactive');
+            })
 
             let gameOver = document.createElement('h3');
             gameOver.textContent = `Game finished. ${(playerWinCount > playerLoseCount) ? "You win!" 
